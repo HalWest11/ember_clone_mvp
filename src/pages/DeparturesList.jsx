@@ -18,7 +18,16 @@ export default function DeparturesList() {
 
   useEffect(() => {
     fetchQuotes()
-      .then((q) => setQuotes(q.filter((q) => q.bookable)))
+      .then((q) => {
+        const now = new Date();
+        setQuotes(
+          q.filter(
+            (quote) =>
+              quote.bookable &&
+              new Date(quote.legs[0].departure.scheduled) > now
+          )
+        );
+      })
       .catch((e) => setError(e.message))
       .finally(() => setLoading(false));
   }, []);

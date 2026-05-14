@@ -16,7 +16,9 @@
       "Bash(python3)",
       "Bash(npm create:*)",
       "Bash(npm install:*)",
-      "Bash(npx vite:*)"
+      "Bash(npx vite:*)",
+      "Bash(python3 -c \"import sys,json; d=json.load\\(sys.stdin\\); q=d['quotes'][0]; print\\('trip_uid:', q['legs'][0]['trip_uid']\\); print\\('bookable:', q['bookable']\\)\")",
+      "Bash(python3 -c \"import sys,json; d=json.load\\(sys.stdin\\); print\\('Keys:', list\\(d.keys\\(\\)\\)\\); print\\('Stops:', len\\(d.get\\('route',[]\\)\\)\\);\")"
     ]
   }
 }
