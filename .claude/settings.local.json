@@ -1,0 +1,22 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(curl -s \"https://api.ember.to/v1/quotes/?origin=13&destination=42&departure_date_from=2026-05-14T00:00:00Z&departure_date_to=2026-05-14T23:59:59Z\")",
+      "Bash(curl -s \"https://api.ember.to/v1/trips/VJbCmBZwE2FtQY2LGGdwot/\")",
+      "Read(//tmp/**)",
+      "Bash(curl -s \"https://api.ember.to/v1/stops/\")",
+      "Bash(curl -s \"https://api.ember.to/v1/routes/\")",
+      "Bash(curl -s \"https://api.ember.to/v1/locations/\")",
+      "Bash(python3 -m json.tool)",
+      "Bash(python3 -c \"import sys, json; data = json.load\\(sys.stdin\\); print\\(json.dumps\\(data[:3], indent=2\\)\\)\")",
+      "Bash(curl -v \"https://api.ember.to/v1/trips/VJbCmBZwE2FtQY2LGGdwot/\")",
+      "Bash(curl -s \"https://api.ember.to/v1/quotes/?origin=13&destination=42&departure_date_from=2026-05-20T00:00:00Z&departure_date_to=2026-05-20T23:59:59Z\")",
+      "Bash(curl:*)",
+      "Bash(python3 -c \"import sys, json; data = json.load\\(sys.stdin\\); print\\(f'Total quotes: {len\\(data[\\\\\"quotes\\\\\"]\\)}'\\)\")",
+      "Bash(python3)",
+      "Bash(npm create:*)",
+      "Bash(npm install:*)",
+      "Bash(npx vite:*)"
+    ]
+  }
+}
