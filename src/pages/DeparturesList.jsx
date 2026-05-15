@@ -50,8 +50,19 @@ export default function DeparturesList() {
         )}
 
         {error && (
-          <div className="bg-red-50 border border-red-200 rounded-xl p-4 text-red-700 text-sm">
-            Failed to load departures. {error}
+          <div className="bg-red-50 border border-red-200 rounded-xl p-4 text-sm">
+            <p className="text-red-700 font-medium">
+              {error.includes("fetch") || error.includes("network") || error.includes("Failed to fetch")
+                ? "You appear to be offline"
+                : "Failed to load departures"}
+            </p>
+            <p className="text-red-500 mt-1 text-xs">{error}</p>
+            <button
+              onClick={() => window.location.reload()}
+              className="mt-3 text-ember-green font-semibold text-sm"
+            >
+              Try again
+            </button>
           </div>
         )}
 

@@ -18,7 +18,11 @@
       "Bash(npm install:*)",
       "Bash(npx vite:*)",
       "Bash(python3 -c \"import sys,json; d=json.load\\(sys.stdin\\); q=d['quotes'][0]; print\\('trip_uid:', q['legs'][0]['trip_uid']\\); print\\('bookable:', q['bookable']\\)\")",
-      "Bash(python3 -c \"import sys,json; d=json.load\\(sys.stdin\\); print\\('Keys:', list\\(d.keys\\(\\)\\)\\); print\\('Stops:', len\\(d.get\\('route',[]\\)\\)\\);\")"
+      "Bash(python3 -c \"import sys,json; d=json.load\\(sys.stdin\\); print\\('Keys:', list\\(d.keys\\(\\)\\)\\); print\\('Stops:', len\\(d.get\\('route',[]\\)\\)\\);\")",
+      "Bash(python -c \"import sys,json; d=json.load\\(sys.stdin\\); print\\(d['quotes'][0]['legs'][0]['trip_uid'] if d.get\\('quotes'\\) else 'NO QUOTES'\\)\")",
+      "Bash(python -c ':*)",
+      "Bash(npm run:*)",
+      "Bash(npm test:*)"
     ]
   }
 }

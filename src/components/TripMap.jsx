@@ -27,7 +27,23 @@ function FitBounds({ positions }) {
   return null;
 }
 
-export default function TripMap({ stops, originId, destinationId }) {
+function busIcon(heading) {
+  return L.divIcon({
+    className: "",
+    iconSize: [28, 28],
+    iconAnchor: [14, 14],
+    html: `<div style="
+      width:28px;height:28px;border-radius:50%;
+      background:#2ab34a;border:3px solid white;
+      box-shadow:0 2px 6px rgba(0,0,0,0.3);
+      display:flex;align-items:center;justify-content:center;
+      font-size:14px;color:white;
+      transform:rotate(${heading ?? 0}deg)
+    ">&#9650;</div>`,
+  });
+}
+
+export default function TripMap({ stops, originId, destinationId, vehicleGps }) {
   const positions = stops
     .filter((s) => !s.skipped)
     .map((s) => [s.location.lat, s.location.lon]);
@@ -68,6 +84,14 @@ export default function TripMap({ stops, originId, destinationId }) {
             />
           );
         })}
+      {/* Live bus marker */}
+      {vehicleGps && vehicleGps.latitude && (
+        <Marker
+          position={[vehicleGps.latitude, vehicleGps.longitude]}
+          icon={busIcon(vehicleGps.heading)}
+          zIndexOffset={1000}
+        />
+      )}
     </MapContainer>
   );
 }

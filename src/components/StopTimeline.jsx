@@ -23,9 +23,19 @@ export default function StopTimeline({ stops, originId, destinationId }) {
         const isLast = i === stops.length - 1;
 
         // Use departure time for most stops, arrival time for the last
-        const time = isLast
-          ? formatTime(stop.arrival?.scheduled)
-          : formatTime(stop.departure?.scheduled);
+        const scheduled = isLast
+          ? stop.arrival?.scheduled
+          : stop.departure?.scheduled;
+        const actual = isLast
+          ? stop.arrival?.actual
+          : stop.departure?.actual;
+        const time = formatTime(scheduled);
+
+        // Calculate delay between actual and scheduled
+        const delayMs = actual && scheduled ? new Date(actual) - new Date(scheduled) : 0;
+        const delayMins = Math.round(delayMs / 60000);
+        const hasActual = actual != null;
+        const isDelayed = hasActual && Math.abs(delayMins) > 1;
 
         return (
           <div
@@ -33,10 +43,31 @@ export default function StopTimeline({ stops, originId, destinationId }) {
             className={`flex items-stretch gap-3 ${isSkipped ? "opacity-40" : ""}`}
           >
             {/* Time column */}
-            <div className="w-14 text-right shrink-0 py-3">
-              <span className={`text-sm font-mono ${isOnRoute ? "text-gray-900 font-semibold" : "text-gray-400"}`}>
-                {time}
-              </span>
+            <div className="w-20 text-right shrink-0 py-3">
+              {isDelayed ? (
+                <div className="flex flex-col items-end gap-0.5">
+                  <span className="text-xs font-mono line-through text-gray-400">
+                    {time}
+                  </span>
+                  <span className={`text-sm font-mono font-semibold ${isOnRoute ? "text-gray-900" : "text-gray-500"}`}>
+                    {formatTime(actual)}
+                  </span>
+                  <span className={`text-[10px] font-semibold leading-tight ${delayMins > 0 ? "text-red-500" : "text-blue-500"}`}>
+                    {delayMins > 0 ? `${delayMins}m late` : `${Math.abs(delayMins)}m early`}
+                  </span>
+                </div>
+              ) : hasActual ? (
+                <div className="flex flex-col items-end gap-0.5">
+                  <span className={`text-sm font-mono ${isOnRoute ? "text-gray-900 font-semibold" : "text-gray-400"}`}>
+                    {time}
+                  </span>
+                  <span className="text-[10px] font-medium text-ember-green">On time</span>
+                </div>
+              ) : (
+                <span className={`text-sm font-mono ${isOnRoute ? "text-gray-900 font-semibold" : "text-gray-400"}`}>
+                  {time}
+                </span>
+              )}
             </div>
 
             {/* Timeline column */}
