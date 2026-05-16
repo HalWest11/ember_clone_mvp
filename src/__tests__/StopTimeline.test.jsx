@@ -104,9 +104,4 @@ describe("StopTimeline", () => {
     render(<StopTimeline stops={baseStops} originId={2} destinationId={3} />);
     expect(screen.getByText("Board here")).toBeInTheDocument();
   });
-
-  it("shows 'Alight here' label at the destination stop", () => {
-    render(<StopTimeline stops={baseStops} originId={2} destinationId={3} />);
-    expect(screen.getByText("Alight here")).toBeInTheDocument();
-  });
 });

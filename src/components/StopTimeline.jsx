@@ -106,11 +106,6 @@ export default function StopTimeline({ stops, originId, destinationId }) {
                   Board here
                 </span>
               )}
-              {isDest && (
-                <span className="inline-block mt-1 text-xs font-semibold text-red-500 bg-red-50 px-2 py-0.5 rounded">
-                  Alight here
-                </span>
-              )}
             </div>
           </div>
         );

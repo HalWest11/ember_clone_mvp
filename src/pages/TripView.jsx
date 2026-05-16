@@ -43,8 +43,24 @@ export default function TripView() {
     };
 
     load();
-    const interval = setInterval(load, 30000);
-    return () => { active = false; clearInterval(interval); };
+    let interval = setInterval(load, 30000);
+
+    const onVisibilityChange = () => {
+      if (document.hidden) {
+        clearInterval(interval);
+        interval = null;
+      } else {
+        load();
+        interval = setInterval(load, 30000);
+      }
+    };
+    document.addEventListener("visibilitychange", onVisibilityChange);
+
+    return () => {
+      active = false;
+      clearInterval(interval);
+      document.removeEventListener("visibilitychange", onVisibilityChange);
+    };
   }, [tripUid]);
 
   if (loading) {
@@ -59,7 +75,11 @@ export default function TripView() {
     return (
       <div className="flex flex-col min-h-dvh items-center justify-center px-6">
         <div className="bg-red-50 border border-red-200 rounded-xl p-4 text-red-700 text-sm mb-4">
-          Failed to load trip details. {loadError}
+          {loadError.includes("abort")
+            ? "Request timed out. Please try again."
+            : loadError.includes("fetch") || loadError.includes("Failed to fetch")
+              ? "You appear to be offline."
+              : "Failed to load trip details."}
         </div>
         <button onClick={() => navigate("/")} className="text-ember-green font-semibold">
           Back to departures

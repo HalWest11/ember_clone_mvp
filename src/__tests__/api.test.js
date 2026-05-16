@@ -48,6 +48,8 @@ describe("fetchQuotes", () => {
 });
 
 describe("fetchTrip", () => {
+  const validUid = "a1b2c3d4-e5f6-7890-abcd-ef1234567890";
+
   it("builds correct URL with trip UID", async () => {
     const mockFetch = vi.fn().mockResolvedValue({
       ok: true,
@@ -55,10 +57,15 @@ describe("fetchTrip", () => {
     });
     global.fetch = mockFetch;
 
-    await fetchTrip("abc-123");
+    await fetchTrip(validUid);
 
     const url = new URL(mockFetch.mock.calls[0][0]);
-    expect(url.pathname).toBe("/v1/trips/abc-123/");
+    expect(url.pathname).toBe(`/v1/trips/${validUid}/`);
+  });
+
+  it("throws on invalid trip UID", async () => {
+    await expect(fetchTrip("bad-uid")).rejects.toThrow("Invalid trip UID");
+    await expect(fetchTrip("../../admin")).rejects.toThrow("Invalid trip UID");
   });
 
   it("throws on HTTP error with status code", async () => {
@@ -67,6 +74,6 @@ describe("fetchTrip", () => {
       status: 404,
     });
 
-    await expect(fetchTrip("bad-uid")).rejects.toThrow("Trip API error: 404");
+    await expect(fetchTrip(validUid)).rejects.toThrow("Trip API error: 404");
   });
 });
