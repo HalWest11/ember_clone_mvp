@@ -38,8 +38,10 @@ export async function fetchQuotes(origin = 13, destination = 42, date = new Date
   return data.quotes;
 }
 
+const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+
 export async function fetchTrip(tripUid) {
-  if (typeof tripUid !== "string" || tripUid.length === 0) {
+  if (typeof tripUid !== "string" || !UUID_RE.test(tripUid)) {
     throw new Error("Invalid trip UID");
   }
 

@@ -24,7 +24,8 @@
       "Bash(npm run:*)",
       "Bash(npm test:*)",
       "WebFetch(domain:ember.to)",
-      "WebFetch(domain:api.ember.to)"
+      "WebFetch(domain:api.ember.to)",
+      "Bash(grep -E \"\\\\.\\(md|txt|MD|TXT\\)$\")"
     ]
   }
 }
